@@ -1,6 +1,9 @@
 "use client";
 
 import * as z from "zod";
+import axios from "axios";
+
+import { useState } from "react";
 import { useStoreModal } from "@/hooks/use-store-modal";
 import Modal from "../ui/modal";
 import { useForm } from "react-hook-form";
@@ -14,6 +17,8 @@ const formSchema = z.object({
 });
 
 export const StoreModal = () => {
+  const [loading, setLoading] = useState(false);
+
   const storeModal = useStoreModal();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -24,7 +29,17 @@ export const StoreModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      setLoading(true);
+
+      const response = await axios.post("/api/stores", values);
+      // window.location.assign(`/${response.data.id}`)
+      console.log(response.data);
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   };
 
   return (
@@ -45,15 +60,15 @@ export const StoreModal = () => {
                         <FormItem>
                             <FormLabel>Nama Toko</FormLabel>
                             <FormControl>
-                                <Input placeholder="Nama Toko" {...field}/>
+                                <Input disabled={loading} placeholder="Nama Toko" {...field}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
                     )}
                     />
                     <div className="pt-6 flex justify-end space-x-2">
-                        <Button variant="outline" onClick={storeModal.onClose}>Cancel</Button>
-                        <Button typeof="submit">Continue</Button>
+                        <Button disabled={loading} variant="outline" onClick={storeModal.onClose}>Cancel</Button>
+                        <Button disabled={loading} typeof="submit">Continue</Button>
                     </div>
                 </form>
             </Form>
