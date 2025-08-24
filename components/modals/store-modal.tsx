@@ -37,6 +37,7 @@ export const StoreModal = () => {
       // window.location.assign(`/${response.data.id}`)
       console.log(response.data);
       toast.success("Store created successfully");
+      window.location.assign(`/${response.data.id}`);
     } catch (error) {
       toast.error("Something went wrong");
     } finally {

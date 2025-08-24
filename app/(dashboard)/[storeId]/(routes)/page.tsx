@@ -1,7 +1,19 @@
-const DashboardPage = () => {
+import db from "@/lib/db"
+
+interface DashboardPageProps {
+    params: {stroreId: string}
+}
+
+const DashboardPage = async ({params}: DashboardPageProps) => {
+
+    const store = await db.store.findFirst({
+        where: {
+            id: params.stroreId
+        }
+    })
     return (
         <div>
-            This is dashboard
+            Active Store: {store?.name}
         </div>
     )
 }
