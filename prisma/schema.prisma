@@ -18,9 +18,23 @@ model Store {
   id        String   @id @default(cuid())
   name      String
   userId    String
+  banners   Banner[] @relation("StoreToBanners")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("stores")
   @@index([userId])
+}
+
+model Banner {
+  id        String   @id @default(uuid())
+  storeId   String
+  store     Store    @relation("StoreToBanners", fields: [storeId], references: [id])
+  label     String
+  imageUrl  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("banners")
+  @@index([storeId])
 }
