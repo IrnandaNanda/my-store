@@ -30,7 +30,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
     return (
         <Modal
             title="Apakah Anda Yakin?"
-            description="Tindakan ini tidak dapat diurungkan."
+            description="Tindakan ini tidak dapat dibatalkan."
             isOpen={isOpen}
             onClose={onClose}
         >
