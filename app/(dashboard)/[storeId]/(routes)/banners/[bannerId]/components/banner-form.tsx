@@ -83,7 +83,7 @@ export const BannerForm: React.FC<BannerFormProps> = ({ initialData }) => {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/banners/${params.bannerId}`);
       router.refresh();
-      router.push("/");
+      router.push(`/${params.storeId}/banners`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Pastikan Toko Tidak Memiliki Produk");

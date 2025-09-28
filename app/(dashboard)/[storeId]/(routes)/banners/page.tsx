@@ -1,5 +1,8 @@
 import db from "@/lib/db";
 import { BannersClient } from "./components/client";
+import { BannerColumn } from "./components/columns";
+
+import {format} from 'date-fns';
 
 const BannersPage = async ({
     params
@@ -15,10 +18,16 @@ const BannersPage = async ({
         }
     })
 
+    const formmattedBanner:BannerColumn[] = banners.map((item) => ({
+        id: item.id,
+        label: item.label,
+        createdAt: format(item.createdAt, "MMM do, yyyy")
+    }))
+
     return ( 
         <div className="flex-col gap-8"> 
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <BannersClient data={banners}/>
+                <BannersClient data={formmattedBanner}/>
             </div>
         </div>
      );

@@ -6,9 +6,12 @@ import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
+import { BannerColumn, columns } from "./columns";
+import { DataTable } from "@/components/ui/data-table";
+import { ApiList } from "@/components/ui/api-list";
 
 interface BannerClinetProps {
-  data: Banner[]
+  data: BannerColumn[]
 }
 
 export const BannersClient: React.FC<BannerClinetProps> = ({
@@ -27,6 +30,10 @@ export const BannersClient: React.FC<BannerClinetProps> = ({
         </Button>
       </div>
       <Separator/>
+      <DataTable data={data} columns={columns} searchKey="label"/>
+      <Heading title="API" description="API Banner"/>
+      <Separator/>
+      <ApiList namaIndikator="banners" idIndikator="bannerId"/>
     </>
   );
 };
