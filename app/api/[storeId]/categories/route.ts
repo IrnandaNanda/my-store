@@ -9,22 +9,22 @@ export async function POST(req: Request,
         const { userId } = await auth();
         const body = await req.json();
 
-        const { label, imageUrl } = body;
+        const { name, bannerId } = body;
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        if (!label) {
-            return new NextResponse("Label Banner Perlu diinput", { status: 400 })
+        if (!name) {
+            return new NextResponse("Nama Kategori Diperlukan", { status: 400 })
         }
 
-        if (!imageUrl) {
-            return new NextResponse("Gambar banner Perlu diinput", { status: 400 })
+        if (!bannerId) {
+            return new NextResponse("Banner ID Perlu diinput", { status: 400 })
         }
 
         if(!params.storeId) {
-            return new NextResponse("Banner Id URL dibutuhkan")
+            return new NextResponse("Store Id URL dibutuhkan")
         }
 
         const storeByUserId = await db.store.findFirst({
@@ -38,18 +38,18 @@ export async function POST(req: Request,
             return new NextResponse("Unauthorized", { status: 401 })
         }
 
-        const banner = await db.banner.create({
+        const category = await db.category.create({
             data: {
-                label,
-                imageUrl,
+                name,
+                bannerId,
                 storeId: params.storeId,
             }
         })
 
-        return NextResponse.json(banner)
+        return NextResponse.json(category)
 
     } catch (error) {
-        console.log("[BANNERS_POST]", error);
+        console.log("[CATEGORIES_POST]", error);
         return new NextResponse("Internal Server Error", {status: 500});
     }
 }
@@ -63,15 +63,15 @@ export async function GET(
             return new NextResponse("Store Id URL dibutuhkan")
         }
 
-        const banner = await db.banner.findMany({
+        const categories = await db.category.findMany({
             where: {
                 storeId: params.storeId
             }
         })
 
-        return NextResponse.json(banner)
+        return NextResponse.json(categories)
     } catch (error) {
-        console.log("[BANNERS_GET]", error);
+        console.log("[CATEGORIES_GET]", error);
         return new NextResponse("Internal Error", {status: 500})
     }
 

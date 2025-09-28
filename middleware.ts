@@ -1,6 +1,6 @@
 import { auth, clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-const publicRoutes = ["/sign-in(.*)", "/sign-up(.*)", "/api(.*)"]; // <-- Tambahkan di sini
+const publicRoutes = ["/sign-in(.*)", "/sign-up(.*)", "/api(.*)"];
 
 const isPublicRoute = createRouteMatcher(publicRoutes);
 
